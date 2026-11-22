@@ -1,7 +1,7 @@
 ## Hi, I'm Sagar 👋
 
 CS undergrad at BITS Pilani · robotics, ML, and hardware ↔ software systems.
-Working on VLA robot policies, ROS 2 tooling, and open-source flight software (ArduPilot).
+I love working with ros2, Rviz, Gazeebo and all things robotics.
 
 ### Tech
 [![Skills](https://skillicons.dev/icons?i=python,cpp,java,js,ros,linux,pytorch,git,docker,arduino&perline=10)](https://skillicons.dev)
