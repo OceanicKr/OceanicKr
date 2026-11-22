@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 76" width="1200" height="76">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#06162a"/><stop offset="1" stop-color="#020a14"/></linearGradient>
+  <style>
+    .d { font: 700 15px 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; letter-spacing: 2px; fill: #3fb7a8; }
+    .n { font: 800 26px 'Segoe UI', Helvetica, Arial, sans-serif; letter-spacing: 6px; fill: #7ff5e3; }
+    .s { font: 400 14px 'Segoe UI', Helvetica, Arial, sans-serif; letter-spacing: 1px; fill: #3fb7a8; }
+    .b { animation: rise ease-in infinite; opacity: 0; }
+    @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: .9; } 100% { transform: translateY(-80px); opacity: 0; } }
+  </style>
+</defs>
+<rect width="1200" height="76" rx="10" fill="url(#g)"/>
+<line x1="24" y1="18" x2="24" y2="58" stroke="#4ff0d8" stroke-width="3"/>
+<line x1="24" y1="38" x2="40" y2="38" stroke="#4ff0d8" stroke-width="2"/>
+<text x="52" y="44" class="d">▼ 4,000 m</text>
+<text x="180" y="47" class="n">BATHYPELAGIC</text>
+<text x="504" y="45" class="s">midnight zone · sonar readings</text>
+<circle cx="980" cy="78" r="2.5" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:0s;animation-duration:4s"/><circle cx="1010" cy="78" r="1.8" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:1.3s;animation-duration:3.5s"/><circle cx="1045" cy="78" r="3" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:2.1s;animation-duration:5s"/><circle cx="1090" cy="78" r="2" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:0.7s;animation-duration:4.2s"/><circle cx="1130" cy="78" r="1.5" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:2.8s;animation-duration:3.2s"/><circle cx="1160" cy="78" r="2.4" fill="none" stroke="#4ff0d8" stroke-opacity=".5" class="b" style="animation-delay:1.8s;animation-duration:4.6s"/>
+</svg>
