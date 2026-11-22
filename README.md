@@ -6,4 +6,4 @@
 </p>
 
 
-<a href="https://www.linkedin.com/in/sagar-kumar-19159b292"><img src="./assets/anglerfish.svg" width="100%" alt="Anglerfish carrying LinkedIn: in/sagar-kumar" /></a>
+<a href="https://www.linkedin.com/in/sagar-kumar-19159b292"><img src="./assets/angler-v2.svg" width="100%" alt="Anglerfish carrying LinkedIn: in/sagar-kumar" /></a>
