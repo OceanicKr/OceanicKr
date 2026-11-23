@@ -358,6 +358,14 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 <text x="96" y="2380" class="h">Depth record</text>
 {bottom}
 </svg>"""
-open(f"{out}/ocean.svg","w").write(ocean)
-print("wrote", f"{out}/ocean.svg")
+import hashlib, glob, re
+h = hashlib.sha1(ocean.encode()).hexdigest()[:8]
+name = f"ocean-{h}.svg"
+for old in glob.glob(f"{out}/ocean*.svg"):
+    if not old.endswith(name): os.remove(old)
+open(f"{out}/{name}","w").write(ocean)
+if os.path.exists("README.md"):
+    r = open("README.md").read()
+    open("README.md","w").write(re.sub(r"\./assets/ocean[^\"]*\.svg", f"./assets/{name}", r))
+print("wrote", name)
 
