@@ -218,7 +218,7 @@ def _col(t):
     for (t0,c0),(t1,c1) in zip(_stops,_stops[1:]):
         if t <= t1: return _lerp(c0,c1,(t-t0)/(t1-t0))
     return _stops[-1][1]
-SUN = "".join(f'<circle cx="-39" cy="153" r="{57*(1-i/60):.2f}" fill="{_col(1-i/60)}"/>' for i in range(60))
+SUN = "".join(f'<circle cx="-15" cy="146" r="{59*(1-i/60):.2f}" fill="{_col(1-i/60)}"/>' for i in range(60))
 
 ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
 <defs>
@@ -295,8 +295,8 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 
 <rect width="{W}" height="{HZ+10}" fill="url(#sky)"/>
 <rect width="{W}" height="{HZ-40}" filter="url(#clouds)" opacity=".8"/>
-<circle cx="-39" cy="153" r="330" fill="url(#halo)"/>
-<circle cx="-39" cy="153" r="130" fill="url(#halo2)"/>
+<circle cx="-15" cy="146" r="400" fill="url(#halo)"/>
+<circle cx="-15" cy="146" r="160" fill="url(#halo2)"/>
 {SUN}
 <text x="1120" y="165" text-anchor="end" class="name">SAGAR KUMAR</text>
 <text x="1116" y="205" text-anchor="end" class="sub">CS @ BITS PILANI</text>
