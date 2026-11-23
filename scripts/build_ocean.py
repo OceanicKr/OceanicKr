@@ -68,7 +68,7 @@ UNDER = C((4,600,1.1),(2,240,.2))
 H = 2500; HZ = 300
 random.seed(11)
 glitter = "".join(
-    f'<ellipse cx="{abs(random.gauss(0,70+ (y-300)*1.3)):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
+    f'<ellipse cx="{abs(random.gauss(0,55+ (y-300)*1.1)):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
     for y in [random.randint(303,425) for _ in range(110)])
 rays = "".join(
     f'<polygon points="{x},440 {x+w},440 {x+w+dx+180},{l} {x+dx},{l}" fill="url(#ray)" class="ry" style="animation-delay:{d}s"/>'
@@ -210,6 +210,16 @@ stats_year = block(1070, "GitHub, last 12 months", year_lines)
 stats_lang = block(1690, "Languages", lang_lines)
 stats_all  = block(2090, "GitHub, all time", all_lines)
 
+def _lerp(c1, c2, t):
+    a = [int(c1[i:i+2],16) for i in (1,3,5)]; b = [int(c2[i:i+2],16) for i in (1,3,5)]
+    return "#" + "".join(f"{round(x+(y-x)*t):02x}" for x,y in zip(a,b))
+_stops = [(0,"#fffef5"),(.42,"#fff8d2"),(.68,"#ffe691"),(.84,"#ffc04a"),(.94,"#ff9a2e"),(1,"#ff7a1f")]
+def _col(t):
+    for (t0,c0),(t1,c1) in zip(_stops,_stops[1:]):
+        if t <= t1: return _lerp(c0,c1,(t-t0)/(t1-t0))
+    return _stops[-1][1]
+SUN = "".join(f'<circle cx="10" cy="150" r="{105*(1-i/60):.2f}" fill="{_col(1-i/60)}"/>' for i in range(60))
+
 ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -285,9 +295,9 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 
 <rect width="{W}" height="{HZ+10}" fill="url(#sky)"/>
 <rect width="{W}" height="{HZ-40}" filter="url(#clouds)" opacity=".8"/>
-<circle cx="0" cy="185" r="600" fill="url(#halo)"/>
-<circle cx="0" cy="185" r="290" fill="url(#halo2)"/>
-<circle cx="0" cy="185" r="150" fill="url(#sun)" clip-path="url(#sky-clip)"/>
+<circle cx="10" cy="150" r="460" fill="url(#halo)"/>
+<circle cx="10" cy="150" r="210" fill="url(#halo2)"/>
+{SUN}
 <text x="1120" y="165" text-anchor="end" class="name">SAGAR KUMAR</text>
 <text x="1116" y="205" text-anchor="end" class="sub">CS @ BITS PILANI</text>
 
