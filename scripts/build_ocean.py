@@ -68,7 +68,7 @@ UNDER = C((4,600,1.1),(2,240,.2))
 H = 2500; HZ = 300
 random.seed(11)
 glitter = "".join(
-    f'<ellipse cx="{1140+random.gauss(0,40+ (y-300)*1.1):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
+    f'<ellipse cx="{abs(random.gauss(0,70+ (y-300)*1.3)):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
     for y in [random.randint(303,425) for _ in range(110)])
 rays = "".join(
     f'<polygon points="{x},440 {x+w},440 {x+w+dx+180},{l} {x+dx},{l}" fill="url(#ray)" class="ry" style="animation-delay:{d}s"/>'
@@ -187,45 +187,28 @@ def item(y, head, desc):
 
 
 def fmt(n): return f"{n:,}"
-def readout(x, y, val, label):
-    return f'<text x="{x}" y="{y}" class="num">{fmt(val)}</text><text x="{x}" y="{y+26}" class="lbl">{label}</text>'
+def pl(n, one, many): return f"{fmt(n)} {one if n == 1 else many}"
 
-dive_log = (f'<text x="96" y="1062" class="dep">DIVE LOG · LAST 12 MONTHS</text>'
-            + readout(96, 1118, ST["contributions"], "contributions")
-            + readout(260, 1118, ST["commits"], "commits")
-            + readout(395, 1118, ST["prs"], "PRs")
-            + readout(500, 1118, ST["contributed_to"], "repos"))
-
-SED = ["#e9a35f","#8fd8ff","#c97b4a","#b45fd6","#6fa6cf","#4ff0d8","#9cc0d2","#f2c14e"]
+year_lines = [
+    f'{pl(ST["contributions"], "contribution", "contributions")} · {pl(ST["commits"], "commit", "commits")}',
+    f'{pl(ST["prs"], "pull request", "pull requests")} · {pl(ST["contributed_to"], "repo", "repos")} contributed to',
+]
 tot = sum(ST["langs"].values()) or 1
 top = sorted(ST["langs"].items(), key=lambda kv: -kv[1])[:6]
-other = tot - sum(v for _, v in top)
-if other > 0: top.append(("Other", other))
-bar, leg, x = "", "", 96.0
-for i, (name, v) in enumerate(top):
-    w = 600 * v / tot
-    bar += f'<rect x="{x:.1f}" y="1700" width="{max(w,2):.1f}" height="16" fill="{SED[i%len(SED)]}"/>'
-    x += w
-    cx = 96 + (i % 3) * 210; cy = 1752 + (i // 3) * 32
-    leg += f'<circle cx="{cx+6}" cy="{cy-6}" r="6" fill="{SED[i%len(SED)]}"/><text x="{cx+20}" y="{cy}" class="lg">{name} {100*v/tot:.1f}%</text>'
-sediment = (f'<text x="96" y="1680" class="dep">SEDIMENT CORE · LANGUAGES</text>'
-            f'<clipPath id="core"><rect x="96" y="1700" width="600" height="16" rx="8"/></clipPath><g clip-path="url(#core)">{bar}</g>{leg}')
-
-days = ST["days"][-182:]
-mx = max(days) if days and max(days) > 0 else 1
-dots = ""
-for i, c in enumerate(days):
-    col, row = divmod(i, 7)
-    a = 0.1 if c == 0 else 0.3 + 0.7 * min(c / mx, 1)
-    r = 3 if c == 0 else 3.2 + 2.6 * min(c / mx, 1)
-    dots += f'<circle cx="{102 + col*21}" cy="{2112 + row*19}" r="{r:.1f}" fill="#4ff0d8" opacity="{a:.2f}"/>'
-sweep = (f'<text x="96" y="2082" class="dep">SONAR SWEEP · LAST 26 WEEKS</text>{dots}'
-         f'<rect x="92" y="2100" width="4" height="134" fill="#7ff5e3" opacity=".5" class="sweep"/>')
-
-bottom = (readout(96, 2490 - 40, ST["longest"], "longest streak (days)")
-          + readout(380, 2490 - 40, ST["current"], "current streak")
-          + readout(620, 2490 - 40, ST["repos"], "public repos")
-          + readout(820, 2490 - 40, ST["stars"], "stars"))
+lang = [f"{n} {100*v/tot:.1f}%" for n, v in top]
+lang_lines = [" · ".join(lang[:3]), " · ".join(lang[3:])]
+all_lines = [
+    f'{pl(ST["repos"], "public repo", "public repos")} · {pl(ST["stars"], "star", "stars")}',
+    f'longest streak {pl(ST["longest"], "day", "days")} · current streak {pl(ST["current"], "day", "days")}',
+]
+def block(y, title, lines):
+    out = f'<text x="96" y="{y}" class="it">{title}</text>'
+    for i, l in enumerate(l for l in lines if l):
+        out += f'<text x="96" y="{y + 30 + i*28}" class="ds">{l}</text>'
+    return out
+stats_year = block(1070, "GitHub, last 12 months", year_lines)
+stats_lang = block(1690, "Languages", lang_lines)
+stats_all  = block(2090, "GitHub, all time", all_lines)
 
 ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
 <defs>
@@ -302,11 +285,11 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 
 <rect width="{W}" height="{HZ+10}" fill="url(#sky)"/>
 <rect width="{W}" height="{HZ-40}" filter="url(#clouds)" opacity=".8"/>
-<circle cx="1150" cy="185" r="560" fill="url(#halo)"/>
-<circle cx="1150" cy="185" r="270" fill="url(#halo2)"/>
-<circle cx="1150" cy="185" r="138" fill="url(#sun)" clip-path="url(#sky-clip)"/>
-<text x="80" y="165" class="name">SAGAR KUMAR</text>
-<text x="84" y="205" class="sub">CS @ BITS PILANI</text>
+<circle cx="0" cy="185" r="600" fill="url(#halo)"/>
+<circle cx="0" cy="185" r="290" fill="url(#halo2)"/>
+<circle cx="0" cy="185" r="150" fill="url(#sun)" clip-path="url(#sky-clip)"/>
+<text x="1120" y="165" text-anchor="end" class="name">SAGAR KUMAR</text>
+<text x="1116" y="205" text-anchor="end" class="sub">CS @ BITS PILANI</text>
 
 <rect y="{HZ+60}" width="{W}" height="{H-HZ-60}" fill="url(#deep)"/>
 {rays}
@@ -339,24 +322,22 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 <g class="bob2">{jelly(860, 1760, .8, "#8fd8ff")}</g>
 {snow}
 
-{dive_log}
-{sediment}
-{sweep}
+{stats_year}
+{stats_lang}
+{stats_all}
 {gauge_mark(1500, "1,000 m")}
 <text x="96" y="1550" class="h">Tools</text>
 <text x="96" y="1598" class="it">Python · C++ · Java · ROS 2</text>
 <text x="96" y="1632" class="it">PyTorch · Gazebo · OpenCV · Linux</text>
 
 {squid(960, 2060)}
-<g class="sch3"><g transform="translate(0,2280)"><g class="wig">{lanterns}</g></g></g>
+<g class="sch3"><g transform="translate(0,2230)"><g class="wig">{lanterns}</g></g></g>
 
 {gauge_mark(1920, "2,000 m")}
 <text x="96" y="1970" class="h">Off the clock</text>
 <text x="96" y="2018" class="it">Tennis · horror films · building things that move</text>
 
 {gauge_mark(2330, "4,000 m")}
-<text x="96" y="2380" class="h">Depth record</text>
-{bottom}
 </svg>"""
 import hashlib, glob, re
 h = hashlib.sha1(ocean.encode()).hexdigest()[:8]
