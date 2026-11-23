@@ -68,7 +68,7 @@ UNDER = C((4,600,1.1),(2,240,.2))
 H = 2500; HZ = 300
 random.seed(11)
 glitter = "".join(
-    f'<ellipse cx="{abs(random.gauss(0,55+ (y-300)*1.1)):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
+    f'<ellipse cx="{abs(random.gauss(0,35+ (y-300)*0.9)):.0f}" cy="{y}" rx="{random.uniform(6,22):.0f}" ry="1.2" fill="#ffe4a8" class="gl" style="animation-delay:{random.uniform(0,3):.2f}s"/>'
     for y in [random.randint(303,425) for _ in range(110)])
 rays = "".join(
     f'<polygon points="{x},440 {x+w},440 {x+w+dx+180},{l} {x+dx},{l}" fill="url(#ray)" class="ry" style="animation-delay:{d}s"/>'
@@ -218,7 +218,7 @@ def _col(t):
     for (t0,c0),(t1,c1) in zip(_stops,_stops[1:]):
         if t <= t1: return _lerp(c0,c1,(t-t0)/(t1-t0))
     return _stops[-1][1]
-SUN = "".join(f'<circle cx="10" cy="150" r="{105*(1-i/60):.2f}" fill="{_col(1-i/60)}"/>' for i in range(60))
+SUN = "".join(f'<circle cx="-29" cy="174" r="{80*(1-i/60):.2f}" fill="{_col(1-i/60)}"/>' for i in range(60))
 
 ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
 <defs>
@@ -295,8 +295,8 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 
 <rect width="{W}" height="{HZ+10}" fill="url(#sky)"/>
 <rect width="{W}" height="{HZ-40}" filter="url(#clouds)" opacity=".8"/>
-<circle cx="10" cy="150" r="460" fill="url(#halo)"/>
-<circle cx="10" cy="150" r="210" fill="url(#halo2)"/>
+<circle cx="-29" cy="174" r="420" fill="url(#halo)"/>
+<circle cx="-29" cy="174" r="170" fill="url(#halo2)"/>
 {SUN}
 <text x="1120" y="165" text-anchor="end" class="name">SAGAR KUMAR</text>
 <text x="1116" y="205" text-anchor="end" class="sub">CS @ BITS PILANI</text>
