@@ -1,3 +1,3 @@
-<img src="./assets/ocean-b40995bf.svg" width="100%" alt="Sagar Kumar — a dive from the surface to 4,000 m" />
+<img src="./assets/ocean-c22dc5c6.svg" width="100%" alt="Sagar Kumar — a dive from the surface to 4,000 m" />
 
 <a href="https://www.linkedin.com/in/sagar-kumar-19159b292"><img src="./assets/angler-v3.svg" width="100%" alt="Anglerfish carrying LinkedIn: in/sagar-kumar" /></a>
