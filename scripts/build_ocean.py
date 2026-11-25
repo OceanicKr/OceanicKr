@@ -320,10 +320,10 @@ ocean = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width=
 
 {gauge_mark(600, "30 m")}
 <text x="96" y="650" class="h">What I do</text>
-{item(702, "Robot learning", "teaching robots to see, understand language and act")}
-{item(782, "Robotics software", "ROS 2, simulation and autonomous navigation")}
-{item(862, "Physical builds", "sensors, embedded systems and the code that drives them")}
-{item(942, "Open source", "contributing to robotics and drone software")}
+{item(702, "Aura farmer", "full-time harvest, yields vary with the moon")}
+{item(782, "Robot whisperer", "they never listen, I never stop talking")}
+{item(862, "Bug breeder", "every fix hatches two more, sustainable farming")}
+{item(942, "Sleep speedrunner", "any% under 4 hours, world record pending")}
 
 <g class="sch2"><g transform="translate(0,1180)"><g class="wig">{school_of(18,(200,30),(.5,.8))}</g></g></g>
 {shark}
